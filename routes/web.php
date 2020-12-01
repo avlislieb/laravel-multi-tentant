@@ -1,4 +1,4 @@
-git commit -m "first commit"<?php
+<?php
 
 use Illuminate\Support\Facades\Route;
 
