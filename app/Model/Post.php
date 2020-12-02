@@ -2,11 +2,15 @@
 
 namespace App\Model;
 
+use App\Observers\Tenant\TenantObserver;
 use App\Scopes\Tenant\TenantScope;
-use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['tenant_id', 'user_id', 'title', 'body'];
 
     public static function boot()
@@ -14,6 +18,8 @@ class Post extends Model
         parent::boot();
 
         static::addGlobalScope(app(TenantScope::class));
+
+        static::observe(new TenantObserver);
     }
 
     public function User()

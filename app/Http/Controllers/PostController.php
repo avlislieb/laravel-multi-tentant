@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Post;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
@@ -23,11 +24,12 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
-        //
+
+        return view('posts.create');
     }
 
     /**
@@ -38,7 +40,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        #dd($request->all());
+
+        try {
+            $post = $request->user()->Post()->create([$request->all()]);
+
+            return redirect()->back()->with('success', 'Cadastro realizado.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao cadastrar');
+        }
     }
 
     /**
