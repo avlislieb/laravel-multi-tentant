@@ -6,6 +6,9 @@
             <div class="col-12">
                 <h2>Create Post</h2>
             </div>
+            <div class="col-12 text-right">
+                <a class="btn btn-outline-success" href="{{ route('posts.index') }}">List Post</a>
+            </div>
 
             <div class="col-9 mx-auto">
                 @if (session()->has('success'))

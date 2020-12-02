@@ -43,7 +43,7 @@ class PostController extends Controller
         #dd($request->all());
 
         try {
-            $post = $request->user()->Post()->create([$request->all()]);
+            $post = $request->user()->Post()->create($request->all());
 
             return redirect()->back()->with('success', 'Cadastro realizado.');
         } catch (\Exception $e) {
