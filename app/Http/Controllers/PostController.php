@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdatePostFormRequest;
 use App\Model\Post;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -35,10 +36,10 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StoreUpdatePostFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdatePostFormRequest $request)
     {
         #dd($request->all());
 

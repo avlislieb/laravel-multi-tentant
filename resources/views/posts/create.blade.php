@@ -15,10 +15,12 @@
                     <div class="alert alert-success">
                         {{ session()->get('success') }}
                     </div>
-                @elseif (session()->has('error'))
-                    <div class="alert alert-danger">
-                        {{ session()->get('error') }}
-                    </div>
+                @elseif ($errors->any())
+                    <ul class="alert alert-danger">
+                        @foreach ($errors->all() as $item)
+                            <li>{{ $item }}</li>
+                        @endforeach
+                    </ul>
                 @endif
 
                 <form action="{{ route('posts.store') }}" method="POST">
