@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUpdatePostFormRequest;
 use App\Model\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -71,7 +72,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -81,9 +84,19 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdatePostFormRequest $request, $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $post = Post::findOrFail($id);
+            $post->update($request->all());
+            DB::commit();
+            return redirect()->back()->with('success', 'Atulizado com sucesso.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Erro ao atualizar');
+        }
+
     }
 
     /**

@@ -10,15 +10,21 @@ use Illuminate\Support\Facades\DB;
 class TenantUnique implements Rule
 {
     private $table;
+    private $column;
+    private $columnValue;
 
     /**
      * Create a new rule instance.
      *
      * @param Model $table_
+     * @param string $columnValue_
+     * @param string $column_
      */
-    public function __construct(Model $table_)
+    public function __construct(Model $table_, string $columnValue_ = null, string $column_ = 'id')
     {
         $this->table = $table_;
+        $this->column = $column_;
+        $this->columnValue = $columnValue_;
     }
 
     /**
@@ -35,8 +41,10 @@ class TenantUnique implements Rule
         $result = $this->table->where($attribute, $value)
                     ->where('tenant_id', $tenantId)
                     ->limit(1)->first();
-
-        return is_null($result);
+        if ($result && $result->{$this->column} == $this->columnValue) {
+            return true;
+        }
+        return false;
     }
 
     /**

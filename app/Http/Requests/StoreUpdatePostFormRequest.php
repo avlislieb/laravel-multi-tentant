@@ -31,7 +31,7 @@ class StoreUpdatePostFormRequest extends FormRequest
                 'string',
                 'min:3',
                 'max:255',
-                new TenantUnique(app(Post::class))
+                new TenantUnique(app(Post::class), $this->segment(2))
             ],
             'body' => ['required', 'string']
         ];

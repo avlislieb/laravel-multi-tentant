@@ -11,7 +11,7 @@
             </div>
             <div class="col-12">
                 @forelse ($posts as $item)
-                    {{ $item->title }}
+                    {{ $item->title }} | <a href="{{ route('posts.edit', $item->id) }}">Editar</a>
                     <hr>
                 @empty
                     <p>Post not found</p>
